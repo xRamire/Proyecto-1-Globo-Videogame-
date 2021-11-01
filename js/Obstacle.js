@@ -31,20 +31,24 @@ class Obstacle {
 
 
 class Plane extends Obstacle {
-    constructor(ctx, posX, posY, width, height, speedX){
+    constructor(ctx, posX, posY, width, height, speedY, speedX) {
         super(ctx, posX, posY, width, height)
 
         this.speed = {
-            x: speedX
+            x: speedX,
+            y: speedY
         }
     }
 
 
     draw() {
+        this.ctx.fillStyle = "red";
         this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
+        this.ctx.fillStyle = "black";
     }
 
     move() {
+        this.pos.y += this.speed.y
         this.pos.x += this.speed.x
     }
 }
@@ -60,16 +64,44 @@ class Bird extends Obstacle {
             x: speedX,
             y: speedY
         }
+
+        this.range = 100
+        this.initialPosX = posX
     }
 
 
     draw() {
+        this.ctx.fillStyle = "yellow";
         this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
+        this.ctx.fillStyle = "black";
     }
 
+    // move() {
+    //     this.pos.y += this.speed.y
+    //     this.pos.x += this.speed.x
+
+    //     if (this.pos.x === this.pos.x + 50){
+    //     this.turn()
+    //     }
+    // }
+
     move() {
+
+        if (this.pos.x >= this.initialPosX + this.range || this.pos.x < 0 || this.pos.x + this.size.width > canvas.width) {
+            this.turn()
+        } else if (this.pos.x <= this.initialPosX - this.range || this.pos.x < 0 || this.pos.x + this.size.width > canvas.width) {
+            this.turn()
+        }
+        
+
+        this.pos.x += this.speed.x
         this.pos.y += this.speed.y
     }
+
+    turn() {
+        this.speed.x = this.speed.x * -1
+    }
+
 
 }
 

@@ -37,7 +37,7 @@ class Player {
 
     moveRight() {
 
-       this.pos.x < 510 ? this.pos.x += 20 : null //deberia ser canvasSize - player.width
+       this.pos.x < canvas.width - this.size.width ? this.pos.x += 20 : null //deberia ser canvasSize - player.width
     }
 
     draw () {
