@@ -55,7 +55,6 @@ const game = {
 
     start() {
         this.intervalId = setInterval(() => {
-            console.log(this.framesCounter)
             this.framesCounter++
 
             if (this.framesCounter > 2000) {
@@ -77,6 +76,7 @@ const game = {
             this.clearScreen()
             this.drawAll()
             this.moveAll()
+
             this.clearObstacles() //stoneClouds
             this.clearPlanes() //planes
             this.clearBirds() //birds
@@ -110,7 +110,10 @@ const game = {
         this.drawBirds() //birds
         this.player.moveGravity()
         this.drawScoreBoard() //score
+        this.drawEnergyBar() //energy bar Background
+        this.drawEnergy()
     },
+
 
     drawBackground() {
         this.background.draw()
@@ -135,6 +138,12 @@ const game = {
     drawScoreBoard() {
         this.scoreBoard.draw(this.framesCounter) //score
     },
+    drawEnergyBar() {
+        this.energyBar.draw()
+    },
+    drawEnergy() {
+        this.energy.draw()
+    },
 
 
 
@@ -146,6 +155,7 @@ const game = {
         this.moveObstacles() //stoneClouds
         this.movePlanes() //planes
         this.moveBirds()  //birds
+        this.movePlayer()
         // this.movePlayerFall() //player
 
     },
@@ -179,7 +189,10 @@ const game = {
     createAll() {
         this.createBackground()
         this.createPlayer()
-        this.createScoreBoard() 
+        this.createScoreBoard()
+        this.createEnergyBar()
+        this.createEnergy()
+
     },
 
     createBackground() {
@@ -204,27 +217,64 @@ const game = {
     },
 
     createScoreBoard() {
-        this.scoreBoard = new Score(this.ctx, 100, 100) // score 
+        this.scoreBoard = new Score(this.ctx, 30, 50) // score 
+    },
+    createEnergyBar() {
+        this.energyBar = new EnergyBar(this.ctx, this.canvasSize.width - 330, 20, 300, 30) // Energy Bar background
+    },
+    createEnergy() {
+        this.energy = new Energy(this.ctx, this.canvasSize.width - 325, 22.5, 290, 25) //energy /gas
     },
 
- 
 
 
 
+
+    movePlayer() {
+        this.pressedLeft && this.player.moveLeft()
+        this.pressedRight && this.player.moveRight()
+        this.pressedSpace && this.player.jump()
+        this.pressedSpace && this.energy.decreaseEnergy()
+
+    },
 
     // TECLADO ////////////////////////////////////////////////////////////////////////
 
     setListeners() {
         document.onkeydown = (e) => {
-            e.key === 'ArrowLeft' ? this.player.moveLeft() : null
-            e.key === 'ArrowRight' ? this.player.moveRight() : null
-            e.key === " " ? this.player.jump() : null
+            // e.key === 'ArrowLeft' && this.player.moveLeft()
+            // e.key === 'ArrowRight' && this.player.moveRight()
+            // e.key === " " && this.player.jump()
+
+            e.key === 'ArrowLeft' && (this.pressedLeft = true)
+            e.key === 'ArrowRight' && (this.pressedRight = true)
+            e.key === " " && (this.pressedSpace = true)
+
+            /* if (e.key === " " && (this.pressedSpace = true)) {
+                this.energy.size.width-- } */
+        }
+
+        document.onkeyup = (e) => {
+            // e.key === 'ArrowLeft' && this.player.moveLeft()
+            // e.key === 'ArrowRight' && this.player.moveRight()
+            // e.key === " " && this.player.jump()
+
+            e.key === 'ArrowLeft' && (this.pressedLeft = false)
+            e.key === 'ArrowRight' && (this.pressedRight = false)
+            e.key === " " && (this.pressedSpace = false)
+
+            /* if (e.key === " " && (this.pressedSpace = false)) {
+                this.energy.size.width--} */
         }
     },
 
 
+    /*
+    on key down => pressed = true;
+    on key up => pressed = false;
 
-
+    if(pressed) => move()
+    */
 
 
     // CLEAR ////////////////////////////////////////////////////////////////////////
@@ -279,7 +329,7 @@ const game = {
         return this.planes.some(obs => { //planes
 
             return (
-                this.player.pos.y + this.player.size.height > obs.pos.y && // Arriba
+                this.player.pos.y + this.player.size.height - 3 > obs.pos.y && // Arriba
                 this.player.pos.y < obs.pos.y + obs.size.height && // abajo
                 this.player.pos.x < obs.pos.x + obs.size.width &&
                 this.player.pos.x + this.player.size.width > obs.pos.x

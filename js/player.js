@@ -15,6 +15,7 @@ class Player {
 
         this.speed = {
             y: speedY,
+            x: speedY,
             yGravity: 2
         }
 
@@ -34,12 +35,12 @@ class Player {
 
     moveLeft() {
 
-        this.pos.x > 0 ? this.pos.x -= 20 : null
+        this.pos.x > 0 ? this.pos.x -= this.speed.x : null
     }
 
     moveRight() {
 
-        this.pos.x < canvas.width - this.size.width ? this.pos.x += 20 : null //deberia ser canvasSize - player.width
+        this.pos.x < canvas.width - this.size.width ? this.pos.x += this.speed.x : null //deberia ser canvasSize - player.width
     }
 
     draw() {
@@ -48,7 +49,7 @@ class Player {
 
     moveGravity() {
 
-        if (this.pos.y < this.pos.initialY && this.pos.y >= 0) {
+        if (this.pos.y < this.pos.initialY) {
             this.pos.y += this.speed.yGravity
             //this.speed.yGravity + 2
         }
@@ -59,8 +60,7 @@ class Player {
 
     jump() {
         //Si estás en el suelo saltas!
-        console.log("hola")
-        this.pos.y -= this.speed.y + 10
+        this.pos.y -= this.speed.y
         //this.speed.y = -10
     }
 

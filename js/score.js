@@ -10,7 +10,7 @@ class Score {
 
   draw(framesCounter) {
     this.ctx.font = '48px serif';
-    this.ctx.fillText(this.score + " metros", this.pos.x, this.pos.y);
+    this.ctx.fillText(this.score + " m ", this.pos.x, this.pos.y);
 
     this.increaseScore(framesCounter)
   }
