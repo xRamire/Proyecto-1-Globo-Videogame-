@@ -61,15 +61,15 @@ const game = {
                 this.framesCounter = 0
             }
 
-            if (this.framesCounter % 2000 === 0) {
+            if (this.framesCounter % 300 === 0) {
                 this.createObstacle() //stoneClouds
             }
 
-            if (this.framesCounter % 2000 === 0) {
+            if (this.framesCounter % 400 === 0) {
                 this.createPlane() //planes
             }
 
-            if (this.framesCounter % 100 === 0) {
+            if (this.framesCounter % 300 === 0) {
                 this.createBird() //bird
             }
 
@@ -186,7 +186,7 @@ const game = {
     },
 
     createBird() {
-        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), Math.random() * (0, 400), 25, 12.5, 1, 2))
+        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 25, 12.5, 1, 2))
     },
 
 

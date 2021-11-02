@@ -45,46 +45,6 @@ class Player {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    // draw(framesCounter) {
-    //     //ancho de un recorte this.imageInstance.width / this.frames
-    //     this.ctx.drawImage(
-    //         this.imageInstance,
-    //         this.framesIndex * this.imageInstance.width / this.frames,  //inicio de recorte x
-    //         0,                                                          //inicio de recorte y
-    //         this.imageInstance.width / this.frames,                     //ancho de recorte
-    //         this.imageInstance.height,                                  //alto de recorte
-    //         this.pos.x,
-    //         this.pos.y,
-    //         this.size.width,
-    //         this.size.height
-    //     )
-
-    //     if (framesCounter % 10 === 0) {
-    //         this.animate()
-    //     }
-    // }
-
     // jump() {
     //     //Si estás en el suelo saltas!
     //     if (this.pos.y >= this.pos.initialY) {
