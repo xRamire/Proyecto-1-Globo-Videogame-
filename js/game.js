@@ -34,6 +34,7 @@ const game = {
         this.createAll()
         this.setListeners()
 
+
         this.start()
 
     },
@@ -80,6 +81,7 @@ const game = {
             this.clearPlanes() //planes
             this.clearBirds() //birds
 
+
             if (this.isCollisionPlayer()) {
                 this.gameOver()
             }
@@ -106,6 +108,8 @@ const game = {
         this.drawObstacles() //stoneClouds
         this.drawPlanes() //planes
         this.drawBirds() //birds
+        this.player.moveGravity()
+        this.drawScoreBoard() //score
     },
 
     drawBackground() {
@@ -128,6 +132,10 @@ const game = {
         this.birds.forEach(obs => obs.draw()) //birds
     },
 
+    drawScoreBoard() {
+        this.scoreBoard.draw(this.framesCounter) //score
+    },
+
 
 
 
@@ -137,7 +145,9 @@ const game = {
         this.moveBackground()
         this.moveObstacles() //stoneClouds
         this.movePlanes() //planes
-        this.moveBirds() //birds
+        this.moveBirds()  //birds
+        // this.movePlayerFall() //player
+
     },
 
     moveBackground() {
@@ -158,6 +168,9 @@ const game = {
         this.birds.forEach(obs => obs.move()) //birds
 
     },
+    // movePlayerFall() {
+    //     this.player.movePlayerFall()
+    // },
 
 
 
@@ -166,6 +179,7 @@ const game = {
     createAll() {
         this.createBackground()
         this.createPlayer()
+        this.createScoreBoard() 
     },
 
     createBackground() {
@@ -173,7 +187,7 @@ const game = {
     },
 
     createPlayer() {
-        this.player = new Player(this.ctx, 400, 500, 80, 110, 0, "player.png")
+        this.player = new Player(this.ctx, 400, this.canvasSize.height - 110, 80, 110, 10, "player.png")
     },
 
     createObstacle() {
@@ -182,14 +196,18 @@ const game = {
     },
 
     createPlane() {
-        this.planes.push(new Plane(this.ctx, 0 - 100, Math.random() * (0, 400), 200, 50, 1, 2))
+        this.planes.push(new Plane(this.ctx, 0 - 100, Math.random() * (0, 400), 200, 50, 1, 1))
     },
 
     createBird() {
-        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 25, 12.5, 1, 2))
+        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 25, 12.5, 1, 1))
     },
 
+    createScoreBoard() {
+        this.scoreBoard = new Score(this.ctx, 100, 100) // score 
+    },
 
+ 
 
 
 
@@ -200,6 +218,7 @@ const game = {
         document.onkeydown = (e) => {
             e.key === 'ArrowLeft' ? this.player.moveLeft() : null
             e.key === 'ArrowRight' ? this.player.moveRight() : null
+            e.key === " " ? this.player.jump() : null
         }
     },
 

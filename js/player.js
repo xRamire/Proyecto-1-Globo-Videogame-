@@ -5,7 +5,7 @@ class Player {
         this.pos = {
             x: posX,
             y: posY,
-            // initialY: posY
+            initialY: posY
         }
 
         this.size = {
@@ -14,8 +14,10 @@ class Player {
         }
 
         this.speed = {
-            y: speedY
+            y: speedY,
+            yGravity: 2
         }
+
 
 
         this.imageInstance = undefined
@@ -31,34 +33,45 @@ class Player {
 
 
     moveLeft() {
-        
+
         this.pos.x > 0 ? this.pos.x -= 20 : null
     }
 
     moveRight() {
 
-       this.pos.x < canvas.width - this.size.width ? this.pos.x += 20 : null //deberia ser canvasSize - player.width
+        this.pos.x < canvas.width - this.size.width ? this.pos.x += 20 : null //deberia ser canvasSize - player.width
     }
 
-    draw () {
+    draw() {
         this.ctx.drawImage(this.imageInstance, this.pos.x, this.pos.y, this.size.width, this.size.height)
     }
 
+    moveGravity() {
 
-    // jump() {
-    //     //Si estás en el suelo saltas!
-    //     if (this.pos.y >= this.pos.initialY) {
-    //         this.pos.y -= 30
-    //         this.speed.y = -15
-    //     }
-    // }
+        if (this.pos.y < this.pos.initialY && this.pos.y >= 0) {
+            this.pos.y += this.speed.yGravity
+            //this.speed.yGravity + 2
+        }
+    }
 
-    // move() {
+
+
+
+    jump() {
+        //Si estás en el suelo saltas!
+        console.log("hola")
+        this.pos.y -= this.speed.y + 10
+        //this.speed.y = -10
+    }
+
+    // movePlayerFall() {
     //     //Si no estás en el suelo cada vez caes más rápido
     //     if (this.pos.y < this.pos.initialY) {
     //         this.pos.y += this.speed.y
     //         this.speed.y += 0.6
     //     }
+
+    //     // this.speed.y += this.physics.gravity
     // }
 
 
