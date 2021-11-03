@@ -19,6 +19,7 @@ const game = {
     obstacles: [], //stoneClouds
     planes: [],
     birds: [],
+    gasBox: [], //refill gas item
     keys: {
         player: {
         }
@@ -57,20 +58,24 @@ const game = {
         this.intervalId = setInterval(() => {
             this.framesCounter++
 
-            if (this.framesCounter > 2000) {
+            if (this.framesCounter > 20000) {
                 this.framesCounter = 0
             }
 
-            if (this.framesCounter % 300 === 0) {
+            if (this.framesCounter % 200 === 0) {
                 this.createObstacle() //stoneClouds
             }
 
-            if (this.framesCounter % 400 === 0) {
+            if (this.framesCounter % 600 === 0) {
                 this.createPlane() //planes
             }
 
             if (this.framesCounter % 300 === 0) {
                 this.createBird() //bird
+            }
+
+            if (this.framesCounter % 1000 === 0) {
+                this.createGas() //gas
             }
 
             this.clearScreen()
@@ -80,7 +85,18 @@ const game = {
             this.clearObstacles() //stoneClouds
             this.clearPlanes() //planes
             this.clearBirds() //birds
+            this.clearGas() //gas
 
+
+            if (this.isCollisionBirds()) {
+                this.energy.decreaseEnergyBird()
+
+            }
+
+            if (this.isCollisionGas()) {
+                this.energy.increaseEnergy()
+
+            }
 
             if (this.isCollisionPlayer()) {
                 this.gameOver()
@@ -90,9 +106,9 @@ const game = {
                 this.gameOver()
             }
 
-            if (this.isCollisionBirds()) {
-                this.gameOver()
-            }
+            // if (this.isCollisionBirds()) {
+            //     this.gameOver()
+            // }
 
         }, 1000 / this.frames)
     },
@@ -112,6 +128,7 @@ const game = {
         this.drawScoreBoard() //score
         this.drawEnergyBar() //energy bar Background
         this.drawEnergy()
+        this.drawGas()
     },
 
 
@@ -138,11 +155,17 @@ const game = {
     drawScoreBoard() {
         this.scoreBoard.draw(this.framesCounter) //score
     },
+
     drawEnergyBar() {
         this.energyBar.draw()
     },
+
     drawEnergy() {
         this.energy.draw()
+    },
+
+    drawGas() {
+        this.gasBox.forEach(obs => obs.draw()) //gas
     },
 
 
@@ -156,7 +179,7 @@ const game = {
         this.movePlanes() //planes
         this.moveBirds()  //birds
         this.movePlayer()
-        // this.movePlayerFall() //player
+        this.moveGas()
 
     },
 
@@ -177,6 +200,10 @@ const game = {
     moveBirds() {
         this.birds.forEach(obs => obs.move()) //birds
 
+    },
+
+    moveGas() {
+        this.gasBox.forEach(obs => obs.move()) //gas
     },
     // movePlayerFall() {
     //     this.player.movePlayerFall()
@@ -200,30 +227,36 @@ const game = {
     },
 
     createPlayer() {
-        this.player = new Player(this.ctx, 400, this.canvasSize.height - 110, 80, 110, 10, "player.png")
+        this.player = new Player(this.ctx, 400, this.canvasSize.height - 110, 65, 90, 10, "player.png")
     },
 
     createObstacle() {
-        this.obstacles.push(new Obstacle(this.ctx, Math.random() * (0, 600), 0, 100, 50, 1)) //stoneClouds
+        this.obstacles.push(new Obstacle(this.ctx, Math.random() * (0, 600), 0, 100, 50, 1, "stoneCloud.png")) //stoneClouds
 
     },
 
     createPlane() {
-        this.planes.push(new Plane(this.ctx, 0 - 100, Math.random() * (0, 400), 200, 50, 1, 1))
+        this.planes.push(new Plane(this.ctx, 0 - 200, Math.random() * (0, 400), 200, 50, 1, 1, "plane.png"))
     },
 
     createBird() {
-        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 25, 12.5, 1, 1))
+        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 40, 20, 1, 1, "bird.png"))
     },
 
     createScoreBoard() {
         this.scoreBoard = new Score(this.ctx, 30, 50) // score 
     },
+
     createEnergyBar() {
         this.energyBar = new EnergyBar(this.ctx, this.canvasSize.width - 330, 20, 300, 30) // Energy Bar background
     },
+
     createEnergy() {
         this.energy = new Energy(this.ctx, this.canvasSize.width - 325, 22.5, 290, 25) //energy /gas
+    },
+
+    createGas() {
+        this.gasBox.push(new Gas(this.ctx, Math.random() * (100, 500), 0, 40, 60, 1, 0, "gas.png"))
     },
 
 
@@ -233,8 +266,11 @@ const game = {
     movePlayer() {
         this.pressedLeft && this.player.moveLeft()
         this.pressedRight && this.player.moveRight()
-        this.pressedSpace && this.player.jump()
+        if (this.energy.size.width > 0) {
+            this.pressedSpace && this.player.jump()
+        }
         this.pressedSpace && this.energy.decreaseEnergy()
+
 
     },
 
@@ -262,7 +298,6 @@ const game = {
             e.key === 'ArrowLeft' && (this.pressedLeft = false)
             e.key === 'ArrowRight' && (this.pressedRight = false)
             e.key === " " && (this.pressedSpace = false)
-
             /* if (e.key === " " && (this.pressedSpace = false)) {
                 this.energy.size.width--} */
         }
@@ -301,6 +336,14 @@ const game = {
 
     clearBirds() {
         this.birds = this.birds.filter(obs => { //birds
+            if (obs.pos.y > 0) {
+                return true
+            }
+        })
+    },
+
+    clearGas() {
+        this.gasBox = this.gasBox.filter(obs => { //gas
             if (obs.pos.y > 0) {
                 return true
             }
@@ -346,6 +389,21 @@ const game = {
                 this.player.pos.x < obs.pos.x + obs.size.width &&
                 this.player.pos.x + this.player.size.width > obs.pos.x
             )
+        })
+    },
+
+    isCollisionGas() {
+        return this.gasBox.some((obs, i) => { //gas
+
+            if (
+                this.player.pos.y + this.player.size.height > obs.pos.y && // Arriba
+                this.player.pos.y < obs.pos.y + obs.size.height && // abajo
+                this.player.pos.x < obs.pos.x + obs.size.width &&
+                this.player.pos.x + this.player.size.width > obs.pos.x
+            ) {
+                this.gasBox.splice(i, 1)
+                return true
+            }
         })
     },
 

@@ -1,7 +1,7 @@
 // FIXED OBSTACLE (STONE CLOUDS)
 
 class Obstacle {
-    constructor(ctx, posX, posY, width, height, speedY) {
+    constructor(ctx, posX, posY, width, height, speedY, imageName) {
         this.ctx = ctx
 
         this.pos = {
@@ -17,10 +17,20 @@ class Obstacle {
         this.speed = {
             y: speedY
         }
+
+        this.imageInstance = undefined
+        this.imageName = imageName
+
+        this.init()
+    }
+
+    init() {
+        this.imageInstance = new Image()
+        this.imageInstance.src = `img/${this.imageName}`
     }
 
     draw() {
-        this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
+        this.ctx.drawImage(this.imageInstance, this.pos.x, this.pos.y, this.size.width, this.size.height)
     }
 
     move() {
@@ -31,8 +41,8 @@ class Obstacle {
 
 
 class Plane extends Obstacle {
-    constructor(ctx, posX, posY, width, height, speedY, speedX) {
-        super(ctx, posX, posY, width, height)
+    constructor(ctx, posX, posY, width, height, speedY, speedX, imageName) {
+        super(ctx, posX, posY, width, height, speedY, imageName)
 
         this.speed = {
             x: speedX,
@@ -41,11 +51,11 @@ class Plane extends Obstacle {
     }
 
 
-    draw() {
-        this.ctx.fillStyle = "red";
-        this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
-        this.ctx.fillStyle = "black";
-    }
+    // draw() {
+    //     this.ctx.fillStyle = "red";
+    //     this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
+    //     this.ctx.fillStyle = "black";
+    // }
 
     move() {
         this.pos.y += this.speed.y
@@ -57,8 +67,8 @@ class Plane extends Obstacle {
 
 
 class Bird extends Obstacle {
-    constructor(ctx, posX, posY, width, height, speedY, speedX) {
-        super(ctx, posX, posY, width, height)
+    constructor(ctx, posX, posY, width, height, speedY, speedX, imageName) {
+        super(ctx, posX, posY, width, height, speedY, imageName)
 
         this.speed = {
             x: speedX,
@@ -70,11 +80,11 @@ class Bird extends Obstacle {
     }
 
 
-    draw() {
-        this.ctx.fillStyle = "yellow";
-        this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
-        this.ctx.fillStyle = "black";
-    }
+    // draw() {
+    //     this.ctx.fillStyle = "yellow";
+    //     this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
+    //     this.ctx.fillStyle = "black";
+    // }
 
     // move() {
     //     this.pos.y += this.speed.y
@@ -89,10 +99,12 @@ class Bird extends Obstacle {
 
         if (this.pos.x >= this.initialPosX + this.range || this.pos.x < 0 || this.pos.x + this.size.width > canvas.width) {
             this.turn()
+
         } else if (this.pos.x <= this.initialPosX - this.range || this.pos.x < 0 || this.pos.x + this.size.width > canvas.width) {
             this.turn()
+            
         }
-        
+
 
         this.pos.x += this.speed.x
         this.pos.y += this.speed.y
@@ -107,7 +119,25 @@ class Bird extends Obstacle {
 
 
 
+class Gas extends Obstacle {
+    constructor(ctx, posX, posY, width, height, speedY, speedX, imageName) {
+        super(ctx, posX, posY, width, height, speedY, imageName)
 
+        this.speed = {
+            y: speedY,
+            x: speedX
+        }
+    }
+
+
+    // draw() {
+    //     this.ctx.fillStyle = "green";
+    //     this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
+    //     this.ctx.fillStyle = "black";
+    // }
+
+
+}
 
 
 

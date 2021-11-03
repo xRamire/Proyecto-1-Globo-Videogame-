@@ -19,7 +19,7 @@ class EnergyBar {
     }
 
     draw() {
-        this.ctx.fillStyle = "blue";
+        this.ctx.fillStyle = "white";
         this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
         this.ctx.fillStyle = "black";
     }
@@ -46,29 +46,47 @@ class Energy extends EnergyBar {
 
 
     draw() {
-        this.ctx.fillStyle = "white";
+        this.ctx.fillStyle = "orange";
         this.ctx.fillRect(this.pos.x, this.pos.y, this.size.width, this.size.height)
         this.ctx.fillStyle = "black";
     }
 
-    increaseEnergy() {
+    increaseEnergy() { //when pick gas
         if (this.size.width > this.size.initialWidth) {
             this.size.width = this.size.initialWidth
+        // } else if (this.size.width = this.size.initialWidth -5) {
+        //     this.size.width += 5
+        } else if (this.size.width < this.size.initialWidth) {
+            this.size.width += 50
         }
+        
     }
 
     decreaseEnergy() {
        if(this.size.width < 0) {
           this.size.width = 0
-
+        
        }
         this.size.width -= 0.5
     }
+
+    decreaseEnergyBird() {
+        if (this.size.width < 0) {
+            this.size.width = 0
+
+        }
+        this.size.width -= 1
+    }
+
 
 
 }
 
 
-
+// increaseEnergy() {
+//     if (this.size.width > this.size.initialWidth) {
+//         this.size.width = this.size.initialWidth
+//     }
+// }
 // al presionar el espacio usas gas/energia y lo que hace es restar de un contador de 100 , cuando llega a 0 game over
 //jump / decrease and increase  

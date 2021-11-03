@@ -60,7 +60,12 @@ class Player {
 
     jump() {
         //Si estás en el suelo saltas!
-        this.pos.y -= this.speed.y
+        if (this.pos.y > 0){
+            this.pos.y -= this.speed.y
+        }
+        
+        
+
         //this.speed.y = -10
     }
 
