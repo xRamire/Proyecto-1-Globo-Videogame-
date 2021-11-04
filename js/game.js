@@ -78,6 +78,8 @@ const game = {
                 this.createGas() //gas
             }
 
+            // MOVE BACKGROUND VELOCIDAD A PARTIR DE X FRAMESCOUNTER
+
             this.clearScreen()
             this.drawAll()
             this.moveAll()
@@ -415,6 +417,14 @@ const game = {
 
     gameOver() {
         clearInterval(this.intervalId)
+        document.querySelector(".game-over").style.display = "block";
+        this.obstacles = []
+        this.planes = []
+        this.birds = []
+        this.gas = []
+        this.framesCounter = 0
+        this.scoreBoard = undefined
+
     }
 
 
