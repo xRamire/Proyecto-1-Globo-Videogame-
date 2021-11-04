@@ -7,3 +7,40 @@
     margin-left: 450px;
     margin-top: 10px;
 }
+
+ .start {
+    background-image: url(../img/istockphoto-499882850-170667a.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: center;
+    position:absolute;
+    width: 600px;
+    height: 700px;
+     margin-left: 450px;
+    margin-top: 10px;
+ }
+
+
+
+ .start-button {
+     width: 200px;
+     height: 200px;
+ }
+ .button {
+  font-size: 30px;
+  background-color: #87000700;
+  color: #fff;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin: 300px 0 0 200px
+ }
+
+ .arrows-img {
+    width: 300px;
+    height: 120px;
+    border: 0;
+    box-shadow: 0;
+    border-radius: 5px;
+    margin: -50px 0 0 155px;
+ }

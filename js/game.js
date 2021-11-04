@@ -223,7 +223,7 @@ const game = {
     },
 
     createBackground() {
-        this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 1, "bg.jpg")
+        this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 1, "bg.png")
     },
 
     createPlayer() {
@@ -362,8 +362,8 @@ const game = {
             return (
                 this.player.pos.y + this.player.size.height > obs.pos.y && // Arriba
                 this.player.pos.y < obs.pos.y + obs.size.height && // abajo
-                this.player.pos.x < obs.pos.x + obs.size.width &&
-                this.player.pos.x + this.player.size.width > obs.pos.x
+                this.player.pos.x + 8 < obs.pos.x + obs.size.width &&
+                this.player.pos.x - 8 + this.player.size.width > obs.pos.x
             )
         })
     },
