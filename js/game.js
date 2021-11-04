@@ -1,5 +1,7 @@
 
 /// GAME LOGIC ////////////////////////////////////////////////////////////////////////
+// const score = document.querySelector('.score span')
+// score.innerHTML = this.scoreBoard
 
 const game = {
     title: 'Globo',
@@ -55,6 +57,14 @@ const game = {
     },
 
     start() {
+
+        sounds.music.play();
+        sounds.music.volume = 0.4;
+        sounds.music.loop = true;
+
+
+
+
         this.intervalId = setInterval(() => {
             this.framesCounter++
 
@@ -80,6 +90,12 @@ const game = {
 
             // MOVE BACKGROUND VELOCIDAD A PARTIR DE X FRAMESCOUNTER
 
+            if (this.framesCounter % 100 === 0){
+                this.background.speed.y = this.background.speed.y +1
+            }
+
+
+
             this.clearScreen()
             this.drawAll()
             this.moveAll()
@@ -101,6 +117,7 @@ const game = {
             }
 
             if (this.isCollisionPlayer()) {
+                
                 this.gameOver()
             }
 
@@ -423,12 +440,11 @@ const game = {
         this.birds = []
         this.gas = []
         this.framesCounter = 0
+
         this.scoreBoard = undefined
 
-    }
+        sounds.music.pause();
+        sounds.music.currentTime = 0;
 
-
-
-
-
+    },
 }
