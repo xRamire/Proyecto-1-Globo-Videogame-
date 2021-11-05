@@ -56,10 +56,7 @@
     margin-top: 10px;
  }
 
-  .game-over-button {
-     width: 200px;
-     height: 200px;
- }
+
  .button {
   font-size: 30px;
   background-color: #87000700;
@@ -70,4 +67,17 @@
   margin: 300px 0 0 200px
  }
 
+.game-over-button {
+     width: 200px;
+     height: 200px;
+     margin: 0 0 0 200px
+ }
+
+
+.score-board {
+  font-size: 30px;
+  color: #fff;
+  margin: 214px 0 0 37px;
+  text-align: center;
+ }
  

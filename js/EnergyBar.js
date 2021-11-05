@@ -52,21 +52,22 @@ class Energy extends EnergyBar {
     }
 
     increaseEnergy() { //when pick gas
-        if (this.size.width > this.size.initialWidth) {
+        if (this.size.width + 50 >= this.size.initialWidth) {
+            console.log("max alcanzado");
             this.size.width = this.size.initialWidth
-        // } else if (this.size.width = this.size.initialWidth -5) {
-        //     this.size.width += 5
+            // } else if (this.size.width = this.size.initialWidth -5) {
+            //     this.size.width += 5
         } else if (this.size.width < this.size.initialWidth) {
             this.size.width += 50
         }
-        
+
     }
 
     decreaseEnergy() {
-       if(this.size.width < 0) {
-          this.size.width = 0
-        
-       }
+        if (this.size.width < 0) {
+            this.size.width = 0
+
+        }
         this.size.width -= 0.5
     }
 

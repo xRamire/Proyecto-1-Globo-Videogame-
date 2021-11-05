@@ -66,6 +66,7 @@ const game = {
 
 
         this.intervalId = setInterval(() => {
+
             this.framesCounter++
 
             if (this.framesCounter > 20000) {
@@ -115,7 +116,7 @@ const game = {
             }
 
             if (this.isCollisionPlayer()) {
-                
+
                 this.gameOver()
             }
 
@@ -435,7 +436,8 @@ const game = {
         this.birds = []
         this.gas = []
         this.framesCounter = 0
-
+        this.finalScore = this.scoreBoard.score
+        document.querySelector(".score").innerText = this.finalScore
         this.scoreBoard = undefined
 
         sounds.music.pause();
