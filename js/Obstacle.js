@@ -37,11 +37,6 @@ class Obstacle {
         this.pos.y += this.speed.y
     }
 
-    speedLvl() {
-        this.speed.y++
-
-        console.log("aaaa")
-    }
 }
 
 

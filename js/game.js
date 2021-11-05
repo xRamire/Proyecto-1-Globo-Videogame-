@@ -59,7 +59,7 @@ const game = {
     start() {
 
         sounds.music.play();
-        sounds.music.volume = 0;
+        sounds.music.volume = 0.4;
         sounds.music.loop = true;
 
 
@@ -89,15 +89,8 @@ const game = {
             }
 
 
-            if (this.framesCounter % 100 === 0) {
-                this.Obstacle.speedLvl
-            }
-
             // MOVE BACKGROUND VELOCIDAD A PARTIR DE X FRAMESCOUNTER
 
-            // if (this.framesCounter % 100 === 0){
-            //     this.background.speed.y = this.background.speed.y +1
-            // } movimiento del background multiplier
 
 
 
@@ -129,10 +122,6 @@ const game = {
             if (this.isCollisionPlanes()) {
                 this.gameOver()
             }
-
-            // if (this.isCollisionBirds()) {
-            //     this.gameOver()
-            // }
 
         }, 1000 / this.frames)
     },
@@ -292,12 +281,7 @@ const game = {
         this.pressedRight && this.player.moveRight()
         if (this.energy.size.width > 0) {
             this.pressedSpace && this.player.jump()
-            sounds.effect.play();
-            sounds.effect.volume = 0.4;
-            sounds.effect.loop = true;
         }
-        sounds.effect.pause();
-        sounds.effect.currentTime = 0;
 
         this.pressedSpace && this.energy.decreaseEnergy()
 
@@ -459,7 +443,4 @@ const game = {
 
     },
 
-    prueba() {
-        this.obstacles.
-    }
 }
