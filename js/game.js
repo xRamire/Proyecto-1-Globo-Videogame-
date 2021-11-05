@@ -73,11 +73,11 @@ const game = {
                 this.framesCounter = 0
             }
 
-            if (this.framesCounter % 200 === 0) {
+            if (this.framesCounter % 80 === 0) {
                 this.createObstacle() //stoneClouds
             }
 
-            if (this.framesCounter % 600 === 0) {
+            if (this.framesCounter % 500 === 0) {
                 this.createPlane() //planes
             }
 
@@ -237,7 +237,7 @@ const game = {
     },
 
     createBackground() {
-        this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 1, "bg.png")
+        this.background = new Background(this.ctx, 0, 0, this.canvasSize.width, this.canvasSize.height, 1.5, "bg.png")
     },
 
     createPlayer() {
@@ -245,16 +245,16 @@ const game = {
     },
 
     createObstacle() {
-        this.obstacles.push(new Obstacle(this.ctx, Math.random() * (0, 600), 0, 100, 50, 1, "stoneCloud.png")) //stoneClouds
-
+        this.obstacles.push(new Obstacle(this.ctx, Math.random() * (0, 600), 0, 100, 50, 1.5, "stoneCloud.png")) //stoneClouds
+        
     },
 
     createPlane() {
-        this.planes.push(new Plane(this.ctx, 0 - 200, Math.random() * (0, 400), 200, 50, 1, 1, "plane.png"))
+        this.planes.push(new Plane(this.ctx, 0 - 200, Math.random() * (0, 400), 200, 50, 1.5, 1.5, "plane.png"))
     },
 
     createBird() {
-        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 40, 20, 1, 1, "bird.png"))
+        this.birds.push(new Bird(this.ctx, Math.random() * (100, 500), 0, 40, 20, 1.5, 1.5, "bird.png"))
     },
 
     createScoreBoard() {
@@ -270,7 +270,7 @@ const game = {
     },
 
     createGas() {
-        this.gasBox.push(new Gas(this.ctx, Math.random() * (100, 500), 0, 40, 60, 1, 0, "gas.png"))
+        this.gasBox.push(new Gas(this.ctx, Math.random() * (100, 500), 0, 40, 60, 1.5, 0, "gas.png"))
     },
 
 
